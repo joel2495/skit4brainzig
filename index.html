@@ -1,23 +1,28 @@
-function trackAndRedirect() {
-  const webLink = "https://www.instagram.com/yateshouse/";
-  const appLink = "instagram://user?username=yateshouse";
+<!DOCTYPE html>
+<html>
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8J35YHP2R"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-H8J35YHP2R');
 
-  gtag('event', 'qr_scan', {
-    'event_category': 'Flyer',
-    'event_label': 'Instagram Bio',
-    'event_callback': function() {
-      // 1. Try to open the App
-      window.location.href = appLink;
-      
-      // 2. If they are still on this page after 0.5 seconds, open the Browser
-      setTimeout(function() {
-        window.location.href = webLink;
-      }, 500);
-    }
-  });
-
-  // Backup Redirect (for safety)
-  setTimeout(function() {
-    window.location.href = webLink;
-  }, 1500);
-}
+      function goToApp() {
+        const appLink = "instagram://user?username=yateshouse";
+        const webFallback = "https://www.instagram.com/yateshouse/";
+        gtag('event', 'qr_scan', { 'event_label': 'Instagram Bio' });
+        window.location.href = appLink;
+        setTimeout(function() { window.location.href = webFallback; }, 600);
+      }
+      window.onload = goToApp;
+    </script>
+</head>
+<body style="background:#000; color:#fff; display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; margin:0; text-align:center;">
+    <h1 style="font-size:3rem; letter-spacing:5px;">SKIT 4 BRAINZ</h1>
+    <a href="instagram://user?username=yateshouse" onclick="goToApp()" 
+       style="margin-top:20px; padding:15px 30px; background:linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color:#fff; text-decoration:none; border-radius:50px; font-weight:bold; font-size:1.2rem;">
+       OPEN IN INSTAGRAM
+    </a>
+</body>
+</html>
